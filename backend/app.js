@@ -1,0 +1,41 @@
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+
+var app = express();
+
+var cors = require('cors');
+
+//Cors Options einrichten - WICHTIG: Vor den Routen erstellen
+const corsOptions = {
+    origin: '*', //Zugriff aller IPs erlauben
+};
+app.use(cors(corsOptions));
+
+
+
+//TODO MEINE Routen
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+
+//******Middleware
+
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+//TODO Meine ROUTEN in der Middleware anmelden
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+
+
+//Cors erstellen - WICHTIG : Vor den Routen erstellen
+
+
+
+module.exports = app;

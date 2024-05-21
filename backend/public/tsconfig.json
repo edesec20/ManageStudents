@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "target": "es6", // or a later version
+    "lib": ["es2016", "dom"], // include at least es2016
+    // other compiler options...
+  }
+}
