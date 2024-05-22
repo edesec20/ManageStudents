@@ -7,6 +7,10 @@
 var app = require('../app');
 var debug = require('debug')('backend:server');
 var http = require('http');
+const {connectDB} = require("../Connection");
+const {Student} = require("../src/db/Student.model.db");
+const Students = require("../src/mock/mockdata");
+const {loadMockData} = require("../src/db/Service");
 
 
 /**
@@ -35,6 +39,11 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 //TODO Datenbank: connectDB & isRunningDB & initializeDB
+
+
+connectDB();
+loadMockData();
+
 
 /**
  * Normalize a port into a number, string, or false.
