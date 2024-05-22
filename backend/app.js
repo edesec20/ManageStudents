@@ -18,6 +18,7 @@ app.use(cors(corsOptions));
 //TODO MEINE Routen
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var StudentRouter = require('./routes/Student');
 
 //******Middleware
 
@@ -32,9 +33,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 //TODO Meine ROUTEN in der Middleware anmelden
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/student', StudentRouter);
 
-
-//Cors erstellen - WICHTIG : Vor den Routen erstellen
 
 
 
