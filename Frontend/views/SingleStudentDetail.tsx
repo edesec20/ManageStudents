@@ -8,17 +8,24 @@ interface SingleStudentDetailProps{
     selectStudent: (student:IStudent | null) => void,
 }
 const SingleStudentDetail:React.FC<SingleStudentDetailProps> = ({selectedStudent, selectStudent}) => {
-    const containerStyle = selectedStudent.fahrerleichterung ? styles.greenContainer : styles.defaultContainer;
+     const calcFahrt = (status:IStudent) =>{
+         console.log("Status: ", status.fahrterleichterung)
+         return (
+             status.fahrterleichterung ? 'Schüler hat Fahrterleichterung' : 'Schüler hat KEINE Fahrterleichterung'
+         )
+     }
+
     return (
         <View style={styles.wrapper}>
             <TouchableOpacity style={styles.backButton} onPress={() => selectStudent(null)}>
                 <Text style={styles.backButtonText}>Back</Text>
             </TouchableOpacity>
             <ScrollView contentContainerStyle={styles.container}>
-                <View style={[styles.detailContainer, containerStyle]}>
+                <View style={[styles.detailContainer]}>
                     <Text style={styles.name}>{selectedStudent.vorname} {selectedStudent.nachname}</Text>
                     <Text style={styles.text}>{selectedStudent.klasse}</Text>
-                    <Text style={styles.text}>{selectedStudent.fahrerleichterung ? "Fahrterleichterung vorhanden" : "keine Fahrterleichterung vorhanden"}</Text>
+                    <Text style={styles.text}>{calcFahrt(selectedStudent) }</Text>
+
                 </View>
             </ScrollView>
         </View>

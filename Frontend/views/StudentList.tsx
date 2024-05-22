@@ -4,22 +4,25 @@ import {SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
 import StudentDetails from "./StudentDetails";
 import SingleStudentDetail from "./SingleStudentDetail";
 import NewStudent from "./NewStudent";
+import studentOverview from "./StudentOverview";
 
-const StudentList = () => {
-    const [students, setStudents] = useState<IStudent[]>(require("../mockdaten/students_mock_data.json"));
-    const [selectedStudent, setSelectedStudent] = useState<IStudent | null>(null);
+interface StudentListProps{
+    students:IStudent[],
+    setStudents: (students:IStudent[]) => void;
+    selectedStudent:IStudent,
+    setSelectedStudent: (student:IStudent) => void;
+    selectStudent : (student:IStudent | null) => void;
+}
+const StudentList:React.FC<StudentListProps> = ({students, setStudents, setSelectedStudent, selectStudent, selectedStudent}) => {
 
 
-    const selectStudent = (student:IStudent | null) => {
-        setSelectedStudent(student);
-    }
 
     return selectedStudent?(
 
-        // Wie kann ich die Students über mehrere Pages hinweg weitergeben (StudentStatus & NewStudent!)
 
         <ScrollView>
             <SingleStudentDetail selectedStudent={selectedStudent} selectStudent={selectStudent}/>
+
         </ScrollView>
 
         ):(
@@ -33,8 +36,6 @@ const StudentList = () => {
             {students.map((s) => (
                 <StudentDetails student={s} selectStudent={selectStudent}/>
             ))}
-
-            <NewStudent students={students} setStudents={setStudents} selectStudent={selectStudent}/>
         </SafeAreaView>
 
     );

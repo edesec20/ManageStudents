@@ -8,8 +8,14 @@ interface StudentDetailsProps{
     selectStudent: (student:IStudent | null) => void
 }
 const StudentDetails:React.FC<StudentDetailsProps> = ({student, selectStudent}) => {
+
+    const handlePress = () => {
+        selectStudent(student)
+        console.log(student)
+    }
+
     return (
-        <TouchableOpacity style={styles.container} onPress={() => selectStudent(student)}>
+        <TouchableOpacity style={styles.container} onPress={() => handlePress()}>
             <ScrollView contentContainerStyle={styles.scrollView}>
                 <View style={styles.card}>
                     <Text style={styles.nameText}>{student.vorname} {student.nachname}</Text>

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, ScrollView, Text, TextInput, View, Button} from "react-native";
 import {IStudent} from "../models/IStudent";
+import {RadioButton} from "react-native-paper";
 
 interface NewStudentsprops {
     students: IStudent[]
@@ -11,48 +12,77 @@ const NewStudent:React.FC<NewStudentsprops> = ({selectStudent, students, setStud
     const [firstname, setFirstname] = useState<string>('');
     const [lastname, setLastname] = useState<string>('');
     const [klasse, setKlasse]= useState<string>('');
-    const [fahrterleichterung, setFahrterleichterung] = useState<boolean>(false);
-
+    const [fahrterleichterung, setFahrterleichterung] = useState<boolean>(true);
+    const [checked, setChecked] = useState('first');
 
     const addStudent = () =>{
         const newStudent: IStudent = {
             vorname: firstname,
             nachname: lastname,
             klasse: klasse,
-            fahrerleichterung: fahrterleichterung,
+            fahrterleichterung: fahrterleichterung,
         };
+        console.log("Fahrterleichterung: ", fahrterleichterung)
         setStudents([...students, newStudent]);
         setFirstname('');
         setLastname('');
         setKlasse('');
         setFahrterleichterung(false);
-
-        selectStudent(null)
+        setChecked('first');
+        selectStudent(null);
     }
+
     return (
-            <View>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Vorname"
-                        value={firstname}
-                        onChangeText={setFirstname}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Nachname"
-                        value={lastname}
-                        onChangeText={setLastname}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Klasse"
-                        value={klasse}
-                        onChangeText={setKlasse}
-                    />
-                    <Button title="Add Student" onPress={addStudent} />
+        <ScrollView>
+            <View style={styles.inputContainer}>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Vorname"
+                    value={firstname}
+                    onChangeText={setFirstname}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Nachname"
+                    value={lastname}
+                    onChangeText={setLastname}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Klasse"
+                    value={klasse}
+                    onChangeText={setKlasse}
+                />
+                <View style={styles.radioContainer}>
+                    <Text>Fahrterleichterung?</Text>
+                    <View style={styles.radioGroup}>
+                        <View style={styles.radioButton}>
+                            <RadioButton
+                                value="first"
+                                status={checked === 'first' ? 'checked' : 'unchecked'}
+                                onPress={() => {
+                                    setChecked('first');
+                                    setFahrterleichterung(true);
+                                }}
+                            />
+                            <Text>Ja</Text>
+                        </View>
+                        <View style={styles.radioButton}>
+                            <RadioButton
+                                value="second"
+                                status={checked === 'second' ? 'checked' : 'unchecked'}
+                                onPress={() => {
+                                    setChecked('second');
+                                    setFahrterleichterung(false);
+                                }}
+                            />
+                            <Text>Nein</Text>
+                        </View>
+                    </View>
                 </View>
+                <Button title="Add Student" onPress={addStudent} />
             </View>
+        </ScrollView>
     );
 };
 
@@ -73,6 +103,18 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginBottom: 10,
         paddingHorizontal: 10,
+    },
+    radioContainer: {
+        marginVertical: 10,
+    },
+    radioGroup: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    radioButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginRight: 20,
     },
     container: {
         padding: 20,

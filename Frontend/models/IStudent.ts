@@ -1,7 +1,7 @@
 export interface IStudent{
     vorname:string,
     nachname:string,
-    fahrerleichterung:boolean,
+    fahrterleichterung:boolean,
     klasse:string,
 
 }
