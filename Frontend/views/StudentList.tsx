@@ -27,7 +27,7 @@ const StudentList:React.FC<StudentListProps> = ({students, setStudents, setSelec
 
         ):(
 
-        <SafeAreaView style={styles.scrollView}>
+        <ScrollView style={styles.scrollView}>
             <View style={styles.card}>
                 <Text style={styles.header}>Students</Text>
             </View>
@@ -36,7 +36,7 @@ const StudentList:React.FC<StudentListProps> = ({students, setStudents, setSelec
             {students? students.map((s) => (
                 <StudentDetails student={s} selectStudent={selectStudent}/>
             )) : ""}
-        </SafeAreaView>
+        </ScrollView>
 
     );
 };
