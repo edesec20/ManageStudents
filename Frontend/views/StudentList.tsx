@@ -33,9 +33,9 @@ const StudentList:React.FC<StudentListProps> = ({students, setStudents, setSelec
             </View>
 
 
-            {students.map((s) => (
+            {students? students.map((s) => (
                 <StudentDetails student={s} selectStudent={selectStudent}/>
-            ))}
+            )) : ""}
         </SafeAreaView>
 
     );

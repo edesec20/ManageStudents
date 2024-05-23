@@ -3,7 +3,7 @@ import {IStudent} from "../model/IStudent";
 let Students:IStudent[] = [
     {
         vorname:"Tobias",
-        nachname:"Schröttner",
+        nachname:"Stner",
         klasse:"4CHIF",
         fahrterleichterung:true
     },

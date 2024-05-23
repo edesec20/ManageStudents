@@ -11,6 +11,7 @@ router.post('/new', async (req: Request, res: Response) => {
         const studentData: IStudent = req.body;
         const newStudent = new Student(studentData);
         await newStudent.save();
+        console.log(newStudent+"ksjdhfkjshdfsf");
         res.status(201).send(newStudent);
     } catch (error) {
         console.error('Fehler beim Erstellen des Studenten:', error);

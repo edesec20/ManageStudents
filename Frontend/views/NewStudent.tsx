@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet, ScrollView, Text, TextInput, View, Button} from "react-native";
 import {IStudent} from "../models/IStudent";
 import {RadioButton} from "react-native-paper";
+import axios from "axios";
 
 interface NewStudentsprops {
     students: IStudent[]
@@ -23,13 +24,24 @@ const NewStudent:React.FC<NewStudentsprops> = ({selectStudent, students, setStud
             fahrterleichterung: fahrterleichterung,
         };
         console.log("Fahrterleichterung: ", fahrterleichterung)
+        axios.post('http://localhost:3333/student/new', newStudent
+        )
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(error => {
+                console.log(error)
+            })
         setStudents([...students, newStudent]);
         setFirstname('');
         setLastname('');
         setKlasse('');
         setFahrterleichterung(false);
         setChecked('first');
+        console.log(newStudent)
+
         selectStudent(null);
+
     }
 
     return (
