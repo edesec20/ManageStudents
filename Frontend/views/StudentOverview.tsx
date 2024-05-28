@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView} from "react-native";
+import {SafeAreaView, ScrollView} from "react-native";
 import StudentList from "./StudentList";
 import {IStudent} from "../models/IStudent";
 
@@ -12,9 +12,9 @@ interface StudentOverviewProps{
 }
 const StudentOverview:React.FC<StudentOverviewProps> = ({students, setStudents, setSelectedStudent, selectStudent, selectedStudent}) => {
     return (
-        <SafeAreaView>
+        <ScrollView>
             <StudentList students={students} setStudents={setStudents} selectStudent={selectStudent} setSelectedStudent={setSelectedStudent} selectedStudent={selectedStudent}/>
-        </SafeAreaView>
+        </ScrollView>
     );
 };
 
