@@ -17,6 +17,7 @@ app.use(cors(corsOptions));
 
 
 var StudentRouter = require('./routes/Student');
+var AttendanceRouter = require('./routes/Attendance');
 
 //******Middleware
 
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //TODO Meine ROUTEN in der Middleware anmelden
 app.use('/student', StudentRouter);
+app.use('/attendance', AttendanceRouter);
 
 
 

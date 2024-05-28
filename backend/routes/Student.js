@@ -20,7 +20,9 @@ router.post('/new', (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         const studentData = req.body;
         const newStudent = new Student_model_db_1.Student(studentData);
         yield newStudent.save();
+        console.log(newStudent + "ksjdhfkjshdfsf");
         res.status(201).send(newStudent);
+        console.log(newStudent);
     }
     catch (error) {
         console.error('Fehler beim Erstellen des Studenten:', error);
