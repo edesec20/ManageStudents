@@ -13,6 +13,7 @@ router.post('/new', async (req: Request, res: Response) => {
         await newStudent.save();
         console.log(newStudent+"ksjdhfkjshdfsf");
         res.status(201).send(newStudent);
+        console.log(newStudent);
     } catch (error) {
         console.error('Fehler beim Erstellen des Studenten:', error);
         res.status(500).send({ error: 'Fehler beim Erstellen des Studenten' });

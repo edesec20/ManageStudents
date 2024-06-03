@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 let Students = [
     {
         vorname: "Tobias",
-        nachname: "Schröttner",
+        nachname: "Stner",
         klasse: "4CHIF",
         fahrterleichterung: true
     },
