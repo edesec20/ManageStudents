@@ -27,7 +27,12 @@ const BottomTopBar = () => {
             })
     }, []);
     return (
+
+
         <Tab.Navigator>
+            <Tab.Screen name={"StudentStatus"}>
+                {() => <StudentStatus students={students} setStudents={setStudents} selectStudent={selectStudent} selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent}/>}
+            </Tab.Screen>
             <Tab.Screen name={"StudentOverview"}>
                 {() => <StudentOverview students={students} setStudents={setStudents} selectStudent={selectStudent} selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent}/>}
             </Tab.Screen>

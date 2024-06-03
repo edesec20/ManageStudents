@@ -22,7 +22,6 @@ const StudentList:React.FC<StudentListProps> = ({students, setStudents, setSelec
 
         <ScrollView>
             <SingleStudentDetail selectedStudent={selectedStudent} selectStudent={selectStudent}/>
-
         </ScrollView>
 
         ):(
