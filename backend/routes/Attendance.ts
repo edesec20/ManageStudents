@@ -8,16 +8,12 @@ let router = express.Router();
 router.post('/new/:id', async (req: Request, res: Response) => {
     try {
         const attendanceData: IAttendance = req.body as IAttendance;
-        console.log(attendanceData);
         const studentId = req.params.id;
         // Prüfen, ob der Student existiert
         const student = await Student.findById(studentId);
         if (!student) {
             return res.status(404).send({ error: 'Student nicht gefunden' });
         }
-
-        console.log(attendanceData.student);
-        console.log(attendanceData.von);
 
         const newAttendance = new Attendance({
             student:attendanceData.student,
@@ -36,7 +32,7 @@ router.post('/new/:id', async (req: Request, res: Response) => {
 router.post('/setEndTime/:id', async (req: Request, res: Response) => {
     try {
         const studentId = req.params.id;
-        const endTime = req.body.endTime;
+        const endTime = req.body.bis;
 
         // Finde den Schüler
         const student = await Student.findById(studentId);
@@ -45,11 +41,10 @@ router.post('/setEndTime/:id', async (req: Request, res: Response) => {
         }
 
         // Finde die letzte Anwesenheit des Schülers und setze die Endzeit
-        const lastAttendance = await Attendance.findOne({ student: studentId }).sort({ bis: -1 });
+        const lastAttendance = await Attendance.findOne({ student: studentId, bis: null });
         if (!lastAttendance) {
             return res.status(404).send({ error: 'Keine Anwesenheiten für diesen Schüler gefunden' });
         }
-
         lastAttendance.bis = endTime;
         await lastAttendance.save();
 
@@ -87,5 +82,45 @@ router.get('/', async (req: Request, res: Response) => {
         res.status(500).send({ error: 'Fehler beim Abrufen der Anwesenheiten' });
     }
 });
+
+
+router.get('/totalHours/:id', async (req: Request, res: Response) => {
+    try {
+        const studentId = req.params.id;
+
+        // Berechne die Start- und Endzeit für die letzten 7 Tage
+        const endTime = new Date();
+        const startTime = new Date();
+        startTime.setDate(endTime.getDate() - 7);
+
+        // Finde alle Anwesenheiten für den angegebenen Schüler im Zeitraum der letzten 7 Tage
+        const attendances = await Attendance.find({
+            student: studentId,
+            von: { $gte: startTime },
+            bis: { $lte: endTime }
+        });
+
+
+        if (attendances.length === 0) {
+            return res.status(404).send({ error: 'Keine Anwesenheiten in den letzten 7 Tagen gefunden' });
+        }
+
+        // Berechne die gesamte Stundenanzahl, die der Schüler anwesend war
+        let totalHours = 0;
+        attendances.forEach(attendance => {
+            const von = attendance.von ? new Date(attendance.von).getTime() : Date.now();
+            const bis = attendance.bis ? new Date(attendance.bis).getTime() : Date.now(); // Falls 'bis' null ist, wird die aktuelle Zeit verwendet
+            totalHours += (bis - von) / (1000 * 60 * 60); // Millisekunden zu Stunden
+            console.log(totalHours);
+        });
+
+        res.status(200).send({ totalHours: totalHours });
+    } catch (error) {
+        console.error('Fehler beim Abrufen der Anwesenheiten:', error);
+        res.status(500).send({ error: 'Fehler beim Abrufen der Anwesenheiten' });
+    }
+});
+
+
 
 module.exports = router;

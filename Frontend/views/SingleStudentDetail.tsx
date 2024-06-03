@@ -1,19 +1,34 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {IStudent} from "../models/IStudent";
 import {StyleSheet, Button, ScrollView, Text, TouchableOpacity, View} from "react-native";
+import axios from "axios";
 
 
 interface SingleStudentDetailProps{
     selectedStudent:IStudent,
     selectStudent: (student:IStudent | null) => void,
 }
+
+
+
 const SingleStudentDetail:React.FC<SingleStudentDetailProps> = ({selectedStudent, selectStudent}) => {
+
+    const [abwesenheit, setAbwesenheit] = useState<number>();
+
+    useEffect(() => {
+        axios.get(`http://localhost:3333/attendance/totalHours/${selectedStudent._id}`)
+            .then(response => {
+                setAbwesenheit(response.data.totalHours);
+            })
+    }, [selectedStudent]);
+
      const calcFahrt = (status:IStudent) =>{
          console.log("Status: ", status.fahrterleichterung)
          return (
              status.fahrterleichterung ? 'Schüler hat Fahrterleichterung' : 'Schüler hat KEINE Fahrterleichterung'
          )
-     }
+     };
+
 
     return (
         <View style={styles.wrapper}>
@@ -25,7 +40,7 @@ const SingleStudentDetail:React.FC<SingleStudentDetailProps> = ({selectedStudent
                     <Text style={styles.name}>{selectedStudent.vorname} {selectedStudent.nachname}</Text>
                     <Text style={styles.text}>{selectedStudent.klasse}</Text>
                     <Text style={styles.text}>{calcFahrt(selectedStudent) }</Text>
-
+                    {abwesenheit? <Text style={styles.text}>Abwesenheit: {abwesenheit.toFixed(3)} Stunden</Text> : <Text style={styles.text}>Abwesenheit: NaN</Text>}
                 </View>
             </ScrollView>
         </View>

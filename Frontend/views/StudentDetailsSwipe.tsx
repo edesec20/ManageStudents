@@ -40,7 +40,7 @@ const StudentDetails:React.FC<StudentDetailsProps> = ({student, selectStudent}) 
     const setAttendanceAnwesend = () => {
 
         axios.post(`http://localhost:3333/attendance/setEndTime/${student._id}`, {
-            "bis": new Date()
+            bis: new Date()
         })
             .then((response) => {
                 console.log(response.data)
@@ -51,13 +51,10 @@ const StudentDetails:React.FC<StudentDetailsProps> = ({student, selectStudent}) 
     }
 
     const setAttandanceAbwesend = () => {
-        const attendance:IAttendance = {
+        axios.post(`http://localhost:3333/attendance/new/${student._id}`, {
             student:student,
             von: new Date(),
             bis: null
-        }
-        axios.post(`http://localhost:3333/attendance/new/${student._id}`, {
-            attendance
         })
             .then((response) => {
                 console.log(response.data)
