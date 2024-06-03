@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import {IStudent} from "../models/IStudent";
 import {StyleSheet, ScrollView, Text, TouchableOpacity, TouchableOpacityComponent, View} from "react-native";
 import {RectButton, Swipeable} from "react-native-gesture-handler";
+import axios from "axios";
+import {IAttendance} from "../models/IAttendance";
+
 
 
 
@@ -15,14 +18,18 @@ const StudentDetails:React.FC<StudentDetailsProps> = ({student, selectStudent}) 
 
     const onSwipeLeft = () => {
         setBackgroundColor('red')
+        console.log(student);
+        setAttandanceAbwesend()
         console.log("swiped left")
     };
 
     const onSwipeRight = () => {
         setBackgroundColor('green');
+        setAttendanceAnwesend()
     };
 
     const renderRightActions = () => {
+
         return (
             <RectButton style={styles.deleteButton}>
                 <Text>Abwesend</Text>
@@ -30,7 +37,39 @@ const StudentDetails:React.FC<StudentDetailsProps> = ({student, selectStudent}) 
         );
     };
 
+    const setAttendanceAnwesend = () => {
+
+        axios.post(`http://localhost:3333/attendance/setEndTime/${student._id}`, {
+            "bis": new Date()
+        })
+            .then((response) => {
+                console.log(response.data)
+            })
+            .catch(error => {
+                console.error("Anwesend!: " +error)
+            })
+    }
+
+    const setAttandanceAbwesend = () => {
+        const attendance:IAttendance = {
+            student:student,
+            von: new Date(),
+            bis: null
+        }
+        axios.post(`http://localhost:3333/attendance/new/${student._id}`, {
+            attendance
+        })
+            .then((response) => {
+                console.log(response.data)
+            })
+            .catch(error => {
+                console.error("Abwesend!: " + error)
+            })
+    }
+
+
     const renderLeftActions = () => {
+
         return (
             <RectButton style={styles.greenButton}>
                 <Text>Anwesend</Text>

@@ -2,9 +2,9 @@ import mongoose, {Schema} from "mongoose";
 import {IStudent} from "../model/IStudent";
 
 const AttendanceSchema = new Schema({
-    student: { type: Schema.Types.ObjectId, ref: 'Student', required: true },
-    von: { type: Date, required: true },
-    bis: { type: Date, required: true }
+    student: { type: Schema.Types.ObjectId, ref: 'Student', required: false },
+    von: { type: Date, required: false },
+    bis: { type: Date, required: false }
 });
 
 const AttendanceModelDb = mongoose.model('Attendance', AttendanceSchema);

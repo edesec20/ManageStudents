@@ -18,6 +18,7 @@ const NewStudent:React.FC<NewStudentsprops> = ({selectStudent, students, setStud
 
     const addStudent = () =>{
         const newStudent: IStudent = {
+            _id:null,
             vorname: firstname,
             nachname: lastname,
             klasse: klasse,

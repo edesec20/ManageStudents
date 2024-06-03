@@ -7,7 +7,8 @@ let router = express.Router();
 
 router.post('/new/:id', async (req: Request, res: Response) => {
     try {
-        const attendanceData: IAttendance = req.body;
+        const attendanceData: IAttendance = req.body as IAttendance;
+        console.log(attendanceData);
         const studentId = req.params.id;
         // Prüfen, ob der Student existiert
         const student = await Student.findById(studentId);
@@ -15,7 +16,14 @@ router.post('/new/:id', async (req: Request, res: Response) => {
             return res.status(404).send({ error: 'Student nicht gefunden' });
         }
 
-        const newAttendance = new Attendance(attendanceData);
+        console.log(attendanceData.student);
+        console.log(attendanceData.von);
+
+        const newAttendance = new Attendance({
+            student:attendanceData.student,
+            von:attendanceData.von,
+            bis:attendanceData.bis
+        });
         await newAttendance.save();
         res.status(201).send(newAttendance);
     } catch (error) {
