@@ -16,7 +16,6 @@ const StudentDetails:React.FC<StudentDetailsProps> = ({student, selectStudent}) 
     const onSwipeLeft = () => {
         setBackgroundColor('red')
         console.log("swiped left")
-        selectStudent(student);
     };
 
     const onSwipeRight = () => {
