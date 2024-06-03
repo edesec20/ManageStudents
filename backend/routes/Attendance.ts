@@ -5,12 +5,12 @@ import { Student } from "../src/db/Student.model.db";
 
 let router = express.Router();
 
-router.post('/new', async (req: Request, res: Response) => {
+router.post('/new/:id', async (req: Request, res: Response) => {
     try {
         const attendanceData: IAttendance = req.body;
-
+        const studentId = req.params.id;
         // Prüfen, ob der Student existiert
-        const student = await Student.findById(attendanceData.student);
+        const student = await Student.findById(studentId);
         if (!student) {
             return res.status(404).send({ error: 'Student nicht gefunden' });
         }
