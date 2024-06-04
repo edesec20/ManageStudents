@@ -1,6 +1,7 @@
 import React from 'react';
 import {IStudent} from "../models/IStudent";
 import {StyleSheet, ScrollView, Text, TouchableOpacity, TouchableOpacityComponent, View} from "react-native";
+import {Checkbox} from "react-native-paper";
 
 
 interface StudentDetailsProps{
@@ -16,13 +17,9 @@ const StudentDetails:React.FC<StudentDetailsProps> = ({student, selectStudent}) 
 
     return (
         <TouchableOpacity style={styles.container} onPress={() => handlePress()}>
-            <ScrollView contentContainerStyle={styles.scrollView}>
                 <View style={styles.card}>
-                    <Text style={styles.nameText}>{student.vorname} {student.nachname}</Text>
+                    <Text style={styles.nameText}>{student.fahrterleichterung? <div>{student.vorname} {student.nachname} <Checkbox status={"checked"}/></div> : `${student.vorname} ${student.nachname}`}</Text>
                 </View>
-
-
-            </ScrollView>
         </TouchableOpacity>
     );
 };
